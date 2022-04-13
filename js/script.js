@@ -39,8 +39,6 @@ function getJadwalDay(){
         .then(data => {
             const jadwal = data.jadwal.data;
             dataJadwal(jadwal);
-            getKota();
-            getNamaKota();  
         });
 }
 
@@ -53,37 +51,46 @@ function dataJadwal(jadwal){
     document.querySelector('.maghrib').textContent = jadwal.maghrib;
     document.querySelector('.isya').textContent = jadwal.isya;
     document.querySelector('.tanggal').textContent = jadwal.tanggal;
+    if(!localStorage.namakota){
+        window.localStorage.setItem('namakota', 'Jakarta');
+    }
+    document.querySelector('#judul-kota').textContent = localStorage.namakota;
 }
 
 
-
-function getKota(){
+const namaListKota = document.querySelector('.cari-kota');
+const addKota = document.querySelector('.nama-list-kota');
+namaListKota.addEventListener('keyup', function(){
+    const kotakota = namaListKota.value.length;
+    console.log(kotakota);
+    if(addKota.length > 0){
+        addKota.classList.remove('hidden-list');
+    } else {
+        addKota.classList.add('hidden-list');
+    }
     fetch('https://api.banghasan.com/sholat/format/json/kota')
         .then(response => response.json())
         .then(response => {
             const kota = response.kota;
-            let likota = ``;
-            kota.forEach( k => {
-                likota += `<li><a class="dropdown-item" id="nama-kota" data-idkota="${k.id}" href="#">${k.nama}</a></li>`;
-            });
-            const listKota = document.querySelector('#list-kota');
-            listKota.innerHTML = likota;
-
-            const namaKota = document.querySelectorAll('#nama-kota');
-            namaKota.forEach( ko => {
-                ko.addEventListener('click', function(){
-                    const idkota = this.dataset.idkota;
-                    const namaKota = this.textContent;
-                    window.localStorage.setItem('idkota', idkota);
-                    window.localStorage.setItem('namakota', namaKota);
-                    document.querySelector('#judul-kota').textContent = localStorage.namakota;
-                    alert(`Kota ${namaKota} berhasil dipilih`);
-                });
-            });
-
+            console.log(kota);
+            // let likota = ``;
+            // kota.forEach( k => {
+            //     likota += `<a href="#" data-idkota="${k.id}" class="list-group-item list-group-item-action">${k.nama}</a>`;
+            // });
+            // const listKota = document.querySelector('.nama-list-kota');
+            // listKota.innerHTML = likota;
 
         } );
-}
+});
+
+            // namaKota.addEventListener('keyup', function(){
+            //     const idkota = this.dataset.idkota;
+            //     const namaKota = this.textContent;
+            //     window.localStorage.setItem('idkota', idkota);
+            //     window.localStorage.setItem('namakota', namaKota);
+            //     document.querySelector('#judul-kota').textContent = localStorage.namakota;
+            //     alert(`Kota ${namaKota} berhasil dipilih`);
+            // });
 
 
 
