@@ -2,16 +2,7 @@ const getDate = new Date();
 const year = getDate.getFullYear();
 const month = getDate.getMonth() + 1;
 const day = getDate.getDate();
-const waktuSekarang = getDate.getDate();
-console.log(waktuSekarang);
 
-
-const ssr = document.querySelector('#suara');
-const audio = document.querySelector('#audio');
-ssr.addEventListener('click', aktfsuara);
-function aktfsuara() {
-    audio.play();
-}
 
 
 function hari() {
@@ -118,6 +109,10 @@ namaListKota.addEventListener('keyup', function () {
 
 });
 
+
+
+
+    
 
 
 getJadwalDay();
